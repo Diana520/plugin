@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<atlassian-plugin key="${atlassian.plugin.key}" name="${project.name}" plugins-version="2">
+    <plugin-info>
+        <description>${project.description}</description>
+        <version>${project.version}</version>
+        <vendor name="${project.organization.name}" url="${project.organization.url}"/>
+        <param name="plugin-icon">images/pluginIcon.png</param>
+        <param name="plugin-logo">images/pluginLogo.png</param>
+    </plugin-info>
+    <!-- add our i18n resource -->
+    <resource type="i18n" name="i18n" location="myPlugin"/>
+    <resource type="i18n" name="i18n-kitchen" location="kitchen-duty-plugin"/>
+    <!-- add our web resources -->
+    <web-resource key="myPlugin-resources" name="myPlugin Web Resources">
+        <dependency>com.atlassian.auiplugin:ajs</dependency>
+        <resource type="download" name="myPlugin.css" location="/css/myPlugin.css"/>
+        <resource type="download" name="myPlugin.js" location="/js/myPlugin.js"/>
+        <resource type="download" name="images/" location="/images"/>
+        <context>myPlugin</context>
+    </web-resource>
+    <web-section name="mySection"
+                 i18n-name-key="my-section.name"
+                 key="my-section" location="my-item-link"
+                 weight="1000">
+        <description key="my-section.description">The mySection Plugin</description>
+    </web-section>
+    <web-item name="myItem"
+              i18n-name-key="my-item.name"
+              key="my-item"
+              section="system.top.navigation.bar"
+              weight="1000">
+        <description key="my-item.description">The myItem Plugin</description>
+        <label key="my-item.label"/>
+        <link linkId="my-item-link"/>
+    </web-item>
+    <web-item name="Atlassian Developers Site"
+              i18n-name-key="atlassian-developers-site.name"
+              key="atlassian-developers-site"
+              section="my-item-link/my-section"
+              weight="1000">
+        <description key="atlassian-developers-site.description">Table of issue status</description>
+        <label key="atlassian-developers-site.label"></label>
+        <link linkId="atlassian-developers-site-link">http://localhost:2990/jira/plugins/servlet/todo/list</link>
+    </web-item>
+
+    <web-item name="New Atlassian Developers Site"
+              i18n-name-key="new-atlassian-developers-site.name"
+              key="new-atlassian-developers-site"
+              section="my-item-link/my-section"
+              weight="1000">
+        <description key="new-atlassian-developers-site.description">Table of issue status</description>
+        <label key="new-atlassian-developers-site.label"></label>
+        <link linkId="new-atlassian-developers-site-link">
+            /secure/KitchenDutyPlanningWebworkAction.jspa
+        </link>
+    </web-item>
+
+
+    <ao key="ao-module">
+        <description>The module configuring the Active Objects service used by this plugin</description>
+        <entity>com.atlassian.tutorial.myPlugin.IssuePr</entity>
+    </ao>
+    <servlet name="Todo List &amp; Add Servlet" class="com.atlassian.tutorial.myPlugin.IssueServlet" key="todo-list">
+        <description>A servlet to add and list todos</description>
+        <url-pattern>/todo/list</url-pattern>
+    </servlet>
+    <rest key="rest" path="/myPlugin" version="1.0">
+        <description>Provides REST resources for the admin UI.</description>
+    </rest>
+
+    <webwork1 key="kitchen-duty-planning-webwork-module" name="Kitchen Duty Planning Webwork Module"
+              i18n-name-key="kitchen-duty-planning-webwork-module.name"
+              roles-required="admin">
+        <description key="kitchen-duty-planning-webwork-module.description">The Kitchen Duty Planning Webwork Module
+            Plugin
+        </description>
+        <actions>
+            <action name="com.atlassian.tutorial.myPlugin.webwork.KitchenDutyPlanningWebworkAction"
+                    alias="KitchenDutyPlanningWebworkAction">
+                <view name="kitchen-duty-planning-success">
+                    /templates/kitchen-duty-planning-webwork-module/kitchen-duty-planning-success.vm
+                </view>
+            </action>
+        </actions>
+    </webwork1>
+    <web-section key="admin_kitchen_duty_planning_section"
+                 name="admin_kitchen_duty_planning_section"
+                 location="admin_plugins_menu"
+                 weight="20"
+                 i18n-name-key="kitchen-duty-plugin.admin.planning.page.web.section.name">
+        <label key="kitchen-duty-plugin.admin.planning.page.web.section.name"/>
+    </web-section>
+
+    <web-item key="admin_kitchen_duty_planning_webitem"
+              name="admin_kitchen_duty_planning_webitem"
+              section="admin_plugins_menu/admin_kitchen_duty_planning_section"
+              weight="15"
+              i18n-name-key="kitchen-duty-plugin.admin.planning.page.web.item.name">
+        <label key="kitchen-duty-plugin.admin.planning.page.web.item.name"/>
+        <link linkId="admin_kitchen_duty_planning_webitem_link">/secure/KitchenDutyPlanningWebworkAction.jspa</link>
+    </web-item>
+</atlassian-plugin>

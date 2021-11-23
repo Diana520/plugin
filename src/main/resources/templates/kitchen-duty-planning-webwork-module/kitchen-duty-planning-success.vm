@@ -1,0 +1,32 @@
+<html>
+<head>
+    <title>$i18n.getText('kitchen-duty-plugin.admin.planning.page.title')</title>
+    <meta name="decorator" content="atl.admin">
+    <style>
+        input[type=submit]{
+            background-color: blue;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<h1>$i18n.getText('kitchen-duty-plugin.admin.planning.page.headline')</h1>
+<form method="post">
+    <div>Choose status: </div>
+    <select name="status" id="status-select">
+        #foreach( $status in $statuses )
+            <option value="$status.id">$status.name</option>
+        #end
+    </select>
+    <div>Issue key</div>
+    <div><input type="text" name="issueKey"/></div>
+
+    <div><input type="submit" value="Submit"/></div>
+</form>
+</body>
+</html>
